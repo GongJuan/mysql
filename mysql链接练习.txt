@@ -1,0 +1,33 @@
+use mydatabase;
+
+-- 1. 创建雇员基本信息表employee，要求按照上表中的要求写出数据类型与约束条件，属性名用英文表示。
+Create table employee(empon char(12) primary key,name varchar(15) notnull,sex bit notnull default 1,
+check(sex=’0’ or sex=’1’),adress varchar(50) unique);
+
+-- 2. 将公司基本信息表中的所在城市属性的数据类型修改为varchar(30)。
+alter table company modify column city varchar(30);
+
+-- 3. 新入职了一名员工，其基本信息为：姓名，王一；员工号，1689；性别，男；住址，东仪路1号。请将此条信息插入至员工基本信息表中。
+insert  into employee  values('1689','王一','男','东仪路1号');
+
+-- 4.查询所有姓王的男员工的基本信息。
+select * from employee where sex='男' and name like '王%';
+
+-- 5. 查询所有工资低于4000的员工的员工号，姓名与工资，并按工资降序排列。
+select empon,name,wage from work where wage<='4000' order by wage desc;
+
+-- 6.查询所在在西安工作的员工号及所在公司的名称。
+select work.empon,company.compname from  work  join company on  WORK.compno=company.compno where city='西安';
+
+-- 8. 为所有的员工涨薪200元。
+ updata work set wage=wage+200;
+
+-- 9.查询“soft”公司男员工的最高工资，最低工资与平均工资。
+ select max(WORK.wage),min(WORK.wage),avg(WORK.wage) from company join work on company.compno=WORK.compno where company.city='soft';
+
+-- 10.分别查询“soft”公司男员工与女员工的最高工资，最低工资与平均工资。
+  select max(WORK.wage),min(WORK.wage),avg(WORK.wage) from company join work on company.compno=WORK.compno 
+employee join work on employee.empno=WORK.empno 
+where company.city='soft' group by employee.sex;
+
+

@@ -1,0 +1,58 @@
+mysql查询的小练习实例：
+
+-- 1.查询2014级有哪些班级（即班级中含有14字样），要求去除重复的结果？
+select  DISTINCT sclass from student where  sclass like '%14%';
+-- 正则表达式：
+select DISTINCT sclass from student where sclass regexp '14';
+ 
+
+
+-- 2.查询所有身高在175以上的男生的姓名，班级，出生日期及身高。
+select sname,sclass,sbirth,height from student where height>='175' and ssex='m';
+
+
+
+-- 3.查询所有身高与体重的差值小于100或大于等于120的学生的学号与班级。
+select sno,sclass from student where (height-weight)>='120' or (height-weight)<'100'; 
+
+
+
+-- 4.查询所有年龄在18（包括）至22（包括）的学生的基本信息。
+select * from student where  (year(now())-year(sbirth)>='18') and  (year(now())-year(sbirth)<='22')
+
+
+
+
+-- 5.查询所有姓Li的学生的姓名，学号与性别。
+select sname,sno,ssex from student where sname like 'Li%';
+-- 正则表达式
+select sname,sno,ssex from student where sname regexp '^li';
+
+
+
+
+-- 6.查询姓名中含有nd 字符的学生的所有信息。
+select * from student where sname like '%nd%';
+-- 正则表达式
+select * from student where sname regexp 'nd';
+
+
+
+-- 7.查询非sap1401班所有学生的姓名，学号，性别，班级。
+select sname,sno,ssex,sclass from student where sclass!='sap1401';
+
+
+
+-- 8.查询既不是food1401班也不是net1201班所有学生的基本信息。
+select * from student where sclass!='food1401'and sclass!='net1201';
+
+
+
+
+-- 9.查询出生年月与zno都为空的所有男生的信息。
+select *from student where sbirth is null && zno is null && ssex= 'm';
+
+
+
+-- 10.查询学号中含有9且以6结尾的学生的全部信息。
+select * from student where sno like '%9%6';
