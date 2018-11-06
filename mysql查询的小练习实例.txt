@@ -1,5 +1,10 @@
 mysql查询的小练习实例：
 
+
+
+
+
+
 -- 1.查询2014级有哪些班级（即班级中含有14字样），要求去除重复的结果？
 select  DISTINCT sclass from student where  sclass like '%14%';
 -- 正则表达式：
